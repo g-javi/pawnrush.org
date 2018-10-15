@@ -8,7 +8,7 @@ const routes: Routes = [
     loadChildren: './pages/home/home.module#HomeModule'
   },
   {
-    path: 'ranking',
+    path: 'rankings',
     loadChildren: './pages/ranking/ranking.module#RankingModule'
   }
 ];

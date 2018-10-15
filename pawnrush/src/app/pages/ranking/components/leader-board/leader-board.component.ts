@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Location } from '@angular/common';
+import { RankingService } from '../../services/ranking.service';
 
 @Component({
   selector: 'app-leader-board',
@@ -7,8 +9,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LeaderBoardComponent implements OnInit {
   $: any = window['jQuery'];
-
-  constructor() { }
+  champion = '';
+  rankings = [];
+  round = Math.round;
+  
+  constructor(private _ranking: RankingService) { }
 
   ngOnInit() {
     this.$('body').scrollspy({
@@ -16,6 +21,12 @@ export class LeaderBoardComponent implements OnInit {
       offset: 100
     });
     this.$('#mainNav').addClass('navbar-shrink');
-  }
 
+    this.$.getJSON(`/api/history`).done(res => {
+      this._ranking.history = res;
+      const results = this._ranking.currentRankings();
+      this.champion = results.champion;
+      this.rankings = results.rankings;
+    });
+  }
 }
