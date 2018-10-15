@@ -1,0 +1,45 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~bootstrap/scss/bootstrap.scss";
+
+@import './styles/variables';
+@import './styles/mixins';
+@import './styles/navbar';
+@import './styles/masthead';
+@import './styles/buttons';
+@import './styles/about';
+@import './styles/projects';
+@import './styles/ranking';
+
+html, body {
+  height: 100%;
+}
+
+body {
+  font-family: 'Nunito';
+  letter-spacing: 0.0625em;
+}
+
+a {
+  color: #64a19d;
+  &:focus,
+  &:hover {
+    text-decoration: none;
+    color: darken(#64a19d, 20%);
+  }
+}
+
+.bg-black {
+  background-color: #161616 !important;
+}
+
+.bg-primary {
+  background-color: #64a19d !important;
+}
+
+.text-primary {
+  color: #64a19d !important;
+}
+
+footer {
+  padding: 2rem 0;
+}
