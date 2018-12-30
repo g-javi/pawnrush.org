@@ -1,0 +1,36 @@
+.white {
+  background: #f0d9b5;
+
+  .top-label, .bottom-label {
+    color: #b58863;
+  }
+}
+
+.black {
+  background: #b58863;
+
+  .top-label, .bottom-label {
+    color: #f0d9b5;
+  }
+}
+
+.top-label, .bottom-label {
+  font-family: 'Helvetica Nue';
+  font-size: 10px;
+  padding: 5px;
+  position: absolute;
+}
+
+.bottom-label {
+  align-self: flex-end;
+  right: 0;
+}
+
+.top-label {
+  align-self: flex-start;
+}
+
+.square {
+  display: flex;
+  position: relative;
+}

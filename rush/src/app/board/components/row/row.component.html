@@ -1,0 +1,14 @@
+<div fxLayout="column" class="board-row" cdkDropListGroup>
+  <div fxFlex fxLayout="row" *ngFor="let r of rowLength; index as y; ">
+    <div fxFlex *ngFor="let c of rowLength; index as x; ">
+      <app-square
+        fxFill fxFlex fxFlexAlign="center" fxLayoutAlign="center"
+        [color]="getSquareColor(x)"
+        [xPosition]="x"
+        [yPosition]="y"
+        [labels]="getSquareLabels(x,y)"
+      >
+      </app-square>
+    </div>
+  </div>
+</div>

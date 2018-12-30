@@ -1,0 +1,12 @@
+<div fxFill fxFlex [ngClass]="color" class="square"
+  
+  >
+  <!--  -->
+  <div *ngIf="labels?.topLabel && xPosition === 0" class="top-label">
+    {{ labels.topLabel }}
+  </div>
+  <app-piece></app-piece>
+  <div *ngIf="labels?.bottomLabel && yPosition === 7" class="bottom-label">
+    {{ labels.bottomLabel }}
+  </div>
+</div>
