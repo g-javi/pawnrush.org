@@ -1,7 +1,7 @@
 // tslint:disable:max-line-length
 
 export const ChessPieces = {
-  WhitePawn: `
+  P: `
     <svg
       xmlns="http://www.w3.org/2000/svg"
       version="1.1"
@@ -26,7 +26,7 @@ export const ChessPieces = {
       />
     </svg>
   `,
-  WhiteRook: `
+  R: `
     <svg
       xmlns="http://www.w3.org/2000/svg"
       version="1.1"
@@ -86,7 +86,7 @@ export const ChessPieces = {
       </g>
     </svg>
   `,
-  WhiteKnight: `
+  N: `
     <svg
       xmlns="http://www.w3.org/2000/svg"
       version="1.1"
@@ -140,7 +140,7 @@ export const ChessPieces = {
       </g>
     </svg>
   `,
-  WhiteBishop: `
+  B: `
     <svg
       xmlns="http://www.w3.org/2000/svg"
       version="1.1"
@@ -184,7 +184,7 @@ export const ChessPieces = {
       </g>
     </svg>
   `,
-  WhiteQueen: `
+  Q: `
     <svg
       xmlns="http://www.w3.org/2000/svg"
       version="1.1"
@@ -246,7 +246,7 @@ export const ChessPieces = {
       </g>
     </svg>
   `,
-  WhiteKing: `
+  K: `
     <svg
       xmlns="http://www.w3.org/2000/svg"
       version="1.1"
@@ -323,7 +323,7 @@ export const ChessPieces = {
       </g>
     </svg>
   `,
-  BlackPawn: `
+  p: `
     <svg
       xmlns="http://www.w3.org/2000/svg"
       version="1.1"
@@ -348,7 +348,7 @@ export const ChessPieces = {
       />
     </svg>
   `,
-  BlackRook: `
+  r: `
     <svg
       xmlns="http://www.w3.org/2000/svg"
       version="1.1"
@@ -455,7 +455,7 @@ export const ChessPieces = {
       </g>
     </svg>
   `,
-  BlackKnight: `
+  n: `
     <svg
       xmlns="http://www.w3.org/2000/svg"
       version="1.1"
@@ -516,7 +516,7 @@ export const ChessPieces = {
       </g>
     </svg>
   `,
-  BlackBishop: `
+  b: `
     <svg
       xmlns="http://www.w3.org/2000/svg"
       version="1.1"
@@ -560,7 +560,7 @@ export const ChessPieces = {
       </g>
     </svg>
   `,
-  BlackQueen: `
+  q: `
     <svg
       xmlns="http://www.w3.org/2000/svg"
       version="1.1"
@@ -646,7 +646,7 @@ export const ChessPieces = {
       </g>
     </svg>
   `,
-  BlackKing: `
+  k: `
     <svg
       xmlns="http://www.w3.org/2000/svg"
       version="1.1"

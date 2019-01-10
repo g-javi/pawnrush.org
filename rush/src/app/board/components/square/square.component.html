@@ -1,12 +1,10 @@
-<div fxFill fxFlex [ngClass]="color" class="square"
-  
-  >
-  <!--  -->
+<div fxFill fxFlex [ngClass]="[color, labels.topLabel + '', labels.bottomLabel + '']" class="square" cdkDropList
+  [cdkDropListData]="todo" (cdkDropListDropped)="drop($event)" [id]="labels.bottomLabel + labels.topLabel">
   <div *ngIf="labels?.topLabel && xPosition === 0" class="top-label">
     {{ labels.topLabel }}
   </div>
-  <app-piece></app-piece>
-  <div *ngIf="labels?.bottomLabel && yPosition === 7" class="bottom-label">
+  <app-piece *ngFor="let item of todo" cdkDragBoundary=".board-row" cdkDrag [type]="todo[0]"></app-piece>
+  <div *ngIf="labels?.bottomLabel" class="bottom-label">
     {{ labels.bottomLabel }}
   </div>
 </div>

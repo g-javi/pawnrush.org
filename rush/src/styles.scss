@@ -2,3 +2,14 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+.piece {
+  z-index: 3;
+  position: absolute;
+  justify-content: center;
+  align-items: center;
+  width: 62.5px;
+  height: 62.5px;
+  display: flex;
+}

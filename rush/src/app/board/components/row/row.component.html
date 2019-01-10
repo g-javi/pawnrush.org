@@ -5,8 +5,9 @@
         fxFill fxFlex fxFlexAlign="center" fxLayoutAlign="center"
         [color]="getSquareColor(x)"
         [xPosition]="x"
-        [yPosition]="y"
+        [yPosition]="alpha[y]"
         [labels]="getSquareLabels(x,y)"
+        [piece]="getPiece(x,y)"
       >
       </app-square>
     </div>

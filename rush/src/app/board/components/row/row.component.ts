@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { SquareLabel } from '../../models/square.models';
+import FENBoard from 'fen-chess-board';
 
 @Component({
   selector: 'app-row',
@@ -7,10 +8,10 @@ import { SquareLabel } from '../../models/square.models';
   styleUrls: ['./row.component.scss']
 })
 export class RowComponent implements OnInit {
-
   alpha = 'abcdefgh'.split('');
   squareColor = true;
   rowLength = [...Array(8)];
+  fenBoard = new FENBoard('rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR');
 
   @Input() orientation: string; // = 'black';
 
@@ -38,4 +39,13 @@ export class RowComponent implements OnInit {
     label.bottomLabel = this.orientation === 'black' ? this.alpha[colNumber] : this.alpha[colNumber];
     return label;
   }
+
+  getPiece(x, y) {
+    const data = this.fenBoard.board[y][x];
+    if (data) {
+      return data;
+    }
+    return undefined;
+  }
+
 }

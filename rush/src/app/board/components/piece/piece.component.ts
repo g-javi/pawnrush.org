@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Input } from '@angular/core';
 import { ChessPieces } from '../../utils/chesspieces';
 
 @Component({
@@ -7,10 +7,16 @@ import { ChessPieces } from '../../utils/chesspieces';
   styleUrls: ['./piece.component.scss']
 })
 export class PieceComponent implements OnInit {
-  img = ChessPieces.BlackPawn;
+  // img = ChessPieces.WhitePawn;
+
+  @Input() type: string;
+  @ViewChild('dataContainer') dataContainer: ElementRef;
+
+
   constructor() { }
 
   ngOnInit() {
+    this.dataContainer.nativeElement.innerHTML = ChessPieces[this.type];
   }
 
 }
