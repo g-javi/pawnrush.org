@@ -1,6 +1,8 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 import { SquareLabel } from '../../models/square.models';
-import FENBoard from 'fen-chess-board';
+import { PawnRushService } from '../../services/pawn-rush.service';
+import { ALPHA_ROW, NUMERIC_ROW } from '../../utils/chess-utils';
 
 @Component({
   selector: 'app-row',
@@ -8,14 +10,16 @@ import FENBoard from 'fen-chess-board';
   styleUrls: ['./row.component.scss']
 })
 export class RowComponent implements OnInit {
-  alpha = 'abcdefgh'.split('');
+  alpha = ALPHA_ROW;
   squareColor = true;
-  rowLength = [...Array(8)];
-  fenBoard = new FENBoard('rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR');
+  rowLength = NUMERIC_ROW;
+  board$: Observable<any>;
 
   @Input() orientation: string; // = 'black';
 
-  constructor() { }
+  constructor(_pawnRush: PawnRushService) {
+    this.board$ = _pawnRush.fenBoard;
+  }
 
   ngOnInit() {
     if (this.orientation === 'black') {
@@ -39,13 +43,4 @@ export class RowComponent implements OnInit {
     label.bottomLabel = this.orientation === 'black' ? this.alpha[colNumber] : this.alpha[colNumber];
     return label;
   }
-
-  getPiece(x, y) {
-    const data = this.fenBoard.board[y][x];
-    if (data) {
-      return data;
-    }
-    return undefined;
-  }
-
 }

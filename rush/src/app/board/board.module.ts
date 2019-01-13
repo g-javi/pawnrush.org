@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { BoardComponent } from './components/board/board.component';
-import { RowComponent } from './components/row/row.component';
-import { PieceComponent } from './components/piece/piece.component';
-import { SquareComponent } from './components/square/square.component';
 import { SharedModule } from '../shared/shared.module';
+import { BoardComponent } from './components/board/board.component';
+import { PieceComponent } from './components/piece/piece.component';
+import { RowComponent } from './components/row/row.component';
+import { SquareComponent } from './components/square/square.component';
+import { PawnRushService } from './services/pawn-rush.service';
 
 @NgModule({
   declarations: [BoardComponent, RowComponent, PieceComponent, SquareComponent],
@@ -13,6 +13,9 @@ import { SharedModule } from '../shared/shared.module';
   ],
   exports: [
     BoardComponent
+  ],
+  providers: [
+    PawnRushService
   ]
 })
 export class BoardModule { }

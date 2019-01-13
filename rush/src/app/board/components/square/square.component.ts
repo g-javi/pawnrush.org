@@ -1,5 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { CdkDragDrop, CdkDragEnter, CdkDragExit, CdkDragStart, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { Component, Input, OnInit } from '@angular/core';
+import { PawnRushService } from '../../services/pawn-rush.service';
 
 @Component({
   selector: 'app-square',
@@ -14,60 +15,66 @@ export class SquareComponent implements OnInit {
   @Input() yPosition: number;
   @Input() piece: any;
 
-  todo = [];
-  constructor() { }
+  data = [];
+
+  constructor(private _pawnRush: PawnRushService) {
+  }
 
   ngOnInit() {
-
     if (this.piece) {
-      this.todo.push(this.piece);
+      this.data.push(this.piece);
     }
   }
 
+  entered(event: CdkDragEnter<string[]>) {
+    const moves = this._pawnRush.squareMoves;
+    const piece = event.item.dropContainer.data[0] !== 'p' && event.item.dropContainer.data[0] !== 'P' ?
+      event.item.dropContainer.data[0].toUpperCase() + event.container.id : event.container.id;
+    const elm = event.item.getPlaceholderElement();
+
+    console.log('enter', moves, piece);
+
+    if (event.container.id === event.item.dropContainer.id) {
+      // do nothing
+    } else if (moves.includes(piece)) { // perform all combination here
+      elm.style.backgroundColor = '#63b566';
+    } else {
+      elm.style.backgroundColor = '#ccc'; // '#a84444';
+    }
+  }
+
+  exited(event: CdkDragExit<string[]>) {
+  }
+
+  started(event: CdkDragStart) {
+    this._pawnRush.moves(event.source.dropContainer.id);
+  }
 
   drop(event: CdkDragDrop<string[]>) {
+    const move = this._pawnRush.move({
+      from: event.previousContainer.id,
+      to: event.container.id,
+      promotion: 'q' // always promote to a queen for example simplicity
+    }, event);
 
-    console.log(event.previousContainer);
-    let result = (window as any).chess.move(event.container.id);
-    const a = event.previousContainer.data[0] === 'k' ? 'K' : event.previousContainer.data[0];
-    if (!result) {
-      result = (window as any).chess.move(a + event.container.id);
-    }
-    if (event.container.data.length) {
-      console.log(event.previousContainer.id[0] + 'x' + event.container.id);
-      result = (window as any).chess.move(event.previousContainer.id[0] + 'x' + event.container.id);
-
-      if (!result) {
-        console.log(a + 'x' + event.container.id);
-
-        result = (window as any).chess.move(a + 'x' + event.container.id);
-      }
-    }
-    if (!result) {
+    if (!move) {
       return;
     }
 
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-      // event.container.data.pop();
     } else {
       const data = event.previousContainer.data[0];
       transferArrayItem(event.previousContainer.data,
         event.container.data,
         event.previousIndex,
         event.currentIndex);
-      console.log('hewe', event.container);
-      // (window as any).chess.ascii();
-      // console.log(event.container.data);
 
       if (event.container.data.length !== 1) {
         event.container.data.pop();
         event.container.data.pop();
         event.container.data.push(data);
       }
-
-      // console.log(event.container.data);
-      // event.container.data.pop();
     }
   }
 }

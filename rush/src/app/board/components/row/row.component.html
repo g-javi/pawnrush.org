@@ -1,15 +1,19 @@
 <div fxLayout="column" class="board-row" cdkDropListGroup>
-  <div fxFlex fxLayout="row" *ngFor="let r of rowLength; index as y; ">
-    <div fxFlex *ngFor="let c of rowLength; index as x; ">
-      <app-square
-        fxFill fxFlex fxFlexAlign="center" fxLayoutAlign="center"
-        [color]="getSquareColor(x)"
-        [xPosition]="x"
-        [yPosition]="alpha[y]"
-        [labels]="getSquareLabels(x,y)"
-        [piece]="getPiece(x,y)"
-      >
-      </app-square>
+  <ng-container *ngIf="board$ | async as board">
+    <div fxFlex fxLayout="row" *ngFor="let r of board; index as y; ">
+      <div fxFlex *ngFor="let c of rowLength; index as x; ">
+        <ng-container *ngIf="board[y][x] else none">
+          <app-square fxFill fxFlex fxFlexAlign="center" fxLayoutAlign="center" [color]="getSquareColor(x)" [xPosition]="x"
+            [yPosition]="alpha[y]" [labels]="getSquareLabels(x,y)" [piece]="board[y][x]">
+          </app-square>
+        </ng-container>
+        <ng-template #none>
+          <app-square fxFill fxFlex fxFlexAlign="center" fxLayoutAlign="center" [color]="getSquareColor(x)" [xPosition]="x"
+            [yPosition]="alpha[y]" [labels]="getSquareLabels(x,y)">
+          </app-square>
+        </ng-template>
+      </div>
     </div>
-  </div>
+  </ng-container>
+  
 </div>
