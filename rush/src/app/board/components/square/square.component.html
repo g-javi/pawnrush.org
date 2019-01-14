@@ -12,7 +12,7 @@
     cdkDragBoundary=".board-row" cdkDrag [type]="data[0]">
     <div class="piece-placeholder" *cdkDragPlaceholder></div>
   </app-piece>
-  <div *ngIf="labels?.bottomLabel" class="bottom-label">
+  <div *ngIf="labels?.bottomLabel && yPosition === 'h'" class="bottom-label">
     {{ labels.bottomLabel }}
   </div>
 

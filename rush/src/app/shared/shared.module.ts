@@ -11,7 +11,8 @@ import { MatDialogModule, MatButtonModule } from '@angular/material';
   ],
   imports: [
     MatDialogModule,
-    MatButtonModule
+    MatButtonModule,
+    CommonModule
   ],
   exports: [
     FlexLayoutModule,

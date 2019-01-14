@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
-import * as Chess from 'chess.js';
+import { MatDialog } from '@angular/material';
+import * as PawnRush from '../utils/pawn-rush.class.js';
 import { BehaviorSubject } from 'rxjs';
+import { DiceDialogComponent } from 'src/app/shared/components/dice-dialog/dice-dialog.component';
 import { ChessInstance } from '../models/pawn-rush.models';
 import { FenBoard } from '../utils/fen-board';
-import { MatDialog } from '@angular/material';
-import { DiceDialogComponent } from 'src/app/shared/components/dice-dialog/dice-dialog.component';
-import { transferArrayItem } from '@angular/cdk/drag-drop';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +17,7 @@ export class PawnRushService {
   private _fenBoardSubject: BehaviorSubject<any>;
 
   constructor(private _dialog: MatDialog) {
-    this._gameInstance = new Chess();
+    this._gameInstance = new PawnRush();
     this._fenBoard = new FenBoard(this._gameInstance.fen());
     this._fenBoardSubject = new BehaviorSubject(this._fenBoard.board);
     (window as any).chess = this._gameInstance;
@@ -38,54 +37,71 @@ export class PawnRushService {
   }
 
   move(move: any, event: any) {
+    const containerPiece = this._gameInstance.get(event.container.id);
     const result = this._gameInstance.move(move);
 
     if (result) {
-      console.log(result);
       if (!!result.captured) {
-        this._gameInstance.undo();
-        this._fenBoard.fen = this._gameInstance.fen();
-        this._fenBoardSubject.next(this._fenBoard.board);
-        const dialogRef = this._dialog.open(DiceDialogComponent);
-
-        dialogRef.afterClosed().subscribe(data => {
+        this._dialog.open(DiceDialogComponent).afterClosed().subscribe(data => {
           let piece;
           if (data) {
-            this._gameInstance.move(move);
-            this._fenBoard.fen = this._gameInstance.fen();
-            this._fenBoardSubject.next(this._fenBoard.board);
-            piece = event.previousContainer.data[0];
-            transferArrayItem(event.previousContainer.data,
-              event.container.data,
-              event.previousIndex,
-              event.currentIndex);
+            event.container.data.pop();
+            piece = event.previousContainer.data.pop();
 
-            if (event.container.data.length !== 1) {
-              event.container.data.pop();
-              event.container.data.pop();
-              event.container.data.push(piece);
+            if (!!result.promotion) {
+              if (result.color === 'w') {
+                piece = 'Q';
+              } else {
+                piece = 'q';
+              }
             }
+
+            event.container.data.push(piece);
           } else {
-            piece = event.container.data[0];
-            transferArrayItem(event.container.data,
-              event.previousContainer.data,
-              event.previousIndex,
-              event.currentIndex);
+            this._gameInstance.remove(event.container.id);
 
-            if (event.previousContainer.data.length !== 1) {
-              // event.previousContainer.data.pop();
-              // event.previousContainer.data.pop();
-              event.previousContainer.data.push(piece);
+            event.previousContainer.data.pop();
+            piece = event.container.data.pop();
+
+            if (containerPiece.type === 'p') {
+              if (event.previousContainer.id.includes('8') && containerPiece.color === 'w') {
+                containerPiece.type = 'q';
+                piece = 'Q';
+              } else if (event.previousContainer.id.includes('1') && containerPiece.color === 'b') {
+                containerPiece.type = 'q';
+                piece = 'q';
+              }
             }
-          }
-          console.log(`Dialog result: ${piece}`, event.previousContainer.data);
 
+            this._gameInstance.put(containerPiece, event.previousContainer.id);
+
+            // change board state
+            event.previousContainer.data.push(piece);
+          }
+          this._fenBoard.fen = this._gameInstance.fen();
+          this._fenBoardSubject.next(this._fenBoard.board);
+          console.log(this._fenBoard.board);
         });
         return;
       }
-      // this._fenBoard.fen = this._gameInstance.fen();
-      // this._fenBoardSubject.next(this._fenBoard.board);
     }
+    this._fenBoard.fen = this._gameInstance.fen();
+    this._fenBoardSubject.next(this._fenBoard.board);
     return result;
+  }
+
+  private flip() {
+    // // const gamePGN = this._gameInstance.pgn();
+    // let tokens = this._gameInstance.fen().split(' ');
+    // tokens[1] = tokens[1] === 'w' ? 'b' : 'w';
+    // this._gameInstance.load(tokens.join(' '));
+    // tokens = this._gameInstance.fen().split(' ');
+    // tokens[1] = tokens[1] === 'w' ? 'b' : 'w';
+    // // this._gameInstance.load_pgn(gamePGN);
+    // function set_turn(chess, color) {
+    // const color = this._gameInstance.turn() === 'w' ? 'b' : 'w';
+    // const tokens = this._gameInstance.fen().split(' ');
+    // tokens[1] = color;
+    // this._gameInstance.load(tokens.join(' '));
   }
 }

@@ -1,8 +1,8 @@
 <h2 mat-dialog-title>Install Angular</h2>
 <mat-dialog-content class="mat-typography">
-  Dice Roll
+  Dice Roll {{ roll$ | async }}
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-  <button mat-button mat-dialog-close>Cancel</button>
-  <button mat-button [mat-dialog-close]="true" cdkFocusInitial>Install</button>
+  <button mat-button [mat-dialog-close]="success" >Close</button>
+  <button mat-button color="primary" (click)="roll()" cdkFocusInitial>Roll</button>
 </mat-dialog-actions>

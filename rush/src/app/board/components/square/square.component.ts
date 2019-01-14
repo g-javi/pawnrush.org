@@ -10,7 +10,7 @@ import { PawnRushService } from '../../services/pawn-rush.service';
 export class SquareComponent implements OnInit {
 
   @Input() color: string;
-  @Input() labels: string;
+  @Input() labels: any;
   @Input() xPosition: number;
   @Input() yPosition: number;
   @Input() piece: any;
