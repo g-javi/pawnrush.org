@@ -12,7 +12,7 @@ export class SquareComponent implements OnInit {
   @Input() color: string;
   @Input() labels: any;
   @Input() xPosition: number;
-  @Input() yPosition: number;
+  @Input() yPosition: string;
   @Input() piece: any;
 
   data = [];
