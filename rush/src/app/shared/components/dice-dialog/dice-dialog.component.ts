@@ -14,6 +14,7 @@ export class DiceDialogComponent implements OnInit {
   roll$ = of('');
   success = false;
   ngOnInit() {
+    this.roll();
   }
 
 

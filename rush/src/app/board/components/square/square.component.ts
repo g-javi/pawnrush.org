@@ -32,8 +32,6 @@ export class SquareComponent implements OnInit {
       event.item.dropContainer.data[0].toUpperCase() + event.container.id : event.container.id;
     const elm = event.item.getPlaceholderElement();
 
-    console.log('enter', moves, piece);
-
     if (event.container.id === event.item.dropContainer.id) {
       // do nothing
     } else if (moves.includes(piece)) { // perform all combination here
